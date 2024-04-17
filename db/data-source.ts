@@ -1,36 +1,25 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
+require('dotenv').config();
 
-/**
- * Live DB SetUp
- */
-
+const cold_db: any = {
+  type: process.env.COLD_DB_TYPE,
+  host: process.env.COLD_DB_HOST,
+  port: process.env.COLD_DB_PORT,
+  username: process.env.COLD_DB_USERNAME,
+  password: process.env.COLD_DB_PASSWORD,
+  database: process.env.COLD_DB_DATABASE,
+};
 export const dataSourceOptions: DataSourceOptions = {
-  type: 'mysql',
-  host: 'coldsg-mysql-db.csospewx4kb0.ap-south-1.rds.amazonaws.com',
-  port: 3306,
-  username: 'admin',
-  password: 'admin123',
-  database: 'cold_live_db',
+  type: cold_db.type,
+  host: cold_db.host,
+  port: cold_db.port,
+  username: cold_db.username,
+  password: cold_db.password,
+  database: cold_db.database,
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/db/migrations/*.js'],
   // synchronize: true,
 };
-
-/**
- * Local DB setup
- */
-
-// export const dataSourceOptions: DataSourceOptions = {
-//     type: 'mysql',
-//     host: 'localhost',
-//     port: 3306,
-//     username: 'root',
-//     password: 'password',
-//     database: 'cold_local_db',
-//     entities: ['dist/**/*.entity.js'],
-//     migrations: ['dist/db/migrations/*.js'],
-//     // synchronize: true,
-//   };
 
 const dataSource = new DataSource(dataSourceOptions);
 
