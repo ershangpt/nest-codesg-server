@@ -14,7 +14,7 @@ import { CustomersModule } from './customers/customers.module';
       password: 'password',
       database: 'cold_local_db',
       entities: ['dist/**/*.entity.js'],
-      synchronize: true,
+      // synchronize: true,
     }),
     CustomersModule,
   ],
