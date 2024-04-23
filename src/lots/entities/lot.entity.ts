@@ -1,49 +1,38 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { LotTransaction } from 'src/lot-transactions/entities/lot-transaction.entity';
 import { Order } from 'src/orders/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class Customer {
+export class Lot {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   @ApiProperty()
-  name: string;
+  lotNumber: string;
 
   @Column()
   @ApiProperty()
-  email: string;
+  totalPack: number;
 
   @Column()
   @ApiProperty()
-  mobile: string;
-
-  @Column()
-  @ApiProperty()
-  shopName: string;
-
-  @Column()
-  @ApiProperty()
-  address: string;
-
-  @Column()
-  @ApiProperty()
-  ratePerPack: number;
+  remainingPack: number;
 
   @Column({
-    type: 'enum',
-    enum: ['Active', 'Inactive'],
-    default: 'Active',
+    type: 'boolean',
+    default: false,
   })
-  status: string;
+  isSettled: boolean;
 
   @CreateDateColumn({
     type: 'timestamp',
@@ -58,6 +47,10 @@ export class Customer {
   })
   public updatedAt: Date;
 
-  @OneToMany(() => Order, (order) => order.customer)
-  orders: Order[];
+  @ManyToOne(() => Order, (order) => order.lots)
+  @ApiProperty()
+  order: number;
+
+  @OneToMany(() => LotTransaction, (lotTxn) => lotTxn.lot)
+  lotTransactions: LotTransaction[];
 }

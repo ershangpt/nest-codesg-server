@@ -22,7 +22,12 @@ export class CustomersService {
   }
 
   findOne(id: number) {
-    return this.customerRepository.findOneBy({ id });
+    return this.customerRepository.find({
+      where: {
+        id,
+      },
+      relations: ['orders'],
+    });
   }
 
   async update(id: number, updateCustomerDto: UpdateCustomerDto) {
