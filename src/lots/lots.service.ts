@@ -24,7 +24,7 @@ export class LotsService {
       txnType: 'credit',
       txnPack: createLotDto.totalPack,
       previousRemainingPack: createLotDto.totalPack,
-      currentRemainingPack: 0,
+      currentRemainingPack: createLotDto.totalPack,
       lot: data.id,
     };
     const lotTxnTT = this.lotTxnRepository.create(lotTxn);
